@@ -1,8 +1,14 @@
 package com.bol.games.mancala.service;
 
+import com.bol.games.mancala.jpa.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Service
 public class ConfigurationDefaultsService {
     @Value("${mancala.defaults.numberOfStones}")
@@ -20,43 +26,15 @@ public class ConfigurationDefaultsService {
     @Value("${mancala.defaults.alias2}")
     private String alias2;
 
-    public Integer getNumberOfStones() {
-        return numberOfStones;
-    }
-
-    public void setNumberOfStones(Integer numberOfStones) {
-        this.numberOfStones = numberOfStones;
-    }
-
-    public Boolean getStepBackAllowed() {
-        return stepBackAllowed;
-    }
-
-    public void setStepBackAllowed(Boolean stepBackAllowed) {
-        this.stepBackAllowed = stepBackAllowed;
-    }
-
-    public Boolean getAutorotate() {
-        return autorotate;
-    }
-
-    public void setAutorotate(Boolean autorotate) {
-        this.autorotate = autorotate;
-    }
-
-    public String getAlias1() {
-        return alias1;
-    }
-
-    public void setAlias1(String alias1) {
-        this.alias1 = alias1;
-    }
-
-    public String getAlias2() {
-        return alias2;
-    }
-
-    public void setAlias2(String alias2) {
-        this.alias2 = alias2;
+    public Configuration getNewDefaultedInstance(String sessionId){
+        var newObj = new Configuration();
+        newObj.setGameSession(sessionId);
+        //set default values, defined in application.properties
+        newObj.setNumberOfStones(this.getNumberOfStones());
+        newObj.setStepBackAllowed(this.getStepBackAllowed());
+        newObj.setAutorotate(this.getAutorotate());
+        newObj.setAlias1(this.getAlias1());
+        newObj.setAlias2(this.getAlias2());
+        return newObj;
     }
 }
