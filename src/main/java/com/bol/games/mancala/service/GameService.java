@@ -4,8 +4,11 @@ import com.bol.games.mancala.dto.ConfigurationDto;
 import com.bol.games.mancala.dto.GameDto;
 import com.bol.games.mancala.helper.ConfigurationHelper;
 import com.bol.games.mancala.helper.GameHelper;
+import com.bol.games.mancala.helper.GameHistoryHelper;
 import com.bol.games.mancala.jpa.Game;
+import com.bol.games.mancala.repository.GameHistoryRepository;
 import com.bol.games.mancala.repository.GameRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 
@@ -14,13 +17,16 @@ public class GameService {
 
     private final ConfigurationService configurationService;
     private final GameRepository gameRepository;
+    private final GameHistoryRepository gameHistoryRepository;
 
     public GameService(
             ConfigurationService configurationService,
-            GameRepository gameRepository
+            GameRepository gameRepository,
+            GameHistoryRepository gameHistoryRepository
     ){
         this.configurationService = configurationService;
         this.gameRepository = gameRepository;
+        this.gameHistoryRepository = gameHistoryRepository;
     }
 
     /**
@@ -39,11 +45,15 @@ public class GameService {
      * @param gameSession sessionId
      * @return DTO to be handled by the UI
      */
+    @Transactional
     public GameDto createGame(
             String gameSession
     ){
         var configuration = this.getCurrentConfiguration(gameSession);
         int stones = configuration.getNumberOfStones();
+
+        //clear history
+        this.gameHistoryRepository.deleteByGameSession(gameSession);
 
         //Look for past records
         var game = this.gameRepository.findByGameSession(gameSession);
@@ -86,6 +96,7 @@ public class GameService {
      * @param index value between 0 and 6
      * @return Game DTO
      */
+    @Transactional
     public GameDto move(
             String gameSession, int playerId, int index){
         var game = this.gameRepository.findByGameSession(gameSession);
@@ -94,6 +105,7 @@ public class GameService {
         if(game == null){
             return this.createGame(gameSession);
         }
+
         var configuration = this.getCurrentConfiguration(gameSession);
 
         //wrong turn makes no effect
@@ -105,6 +117,10 @@ public class GameService {
             board.setConfiguration(configuration);
             return board;
         }
+
+        //log previous status in history
+        this.gameHistoryRepository.save(GameHistoryHelper.toGameHistory(game));
+
 
         var boardArray = GameHelper.convertGameToIntArray(game);
         var currentIndex = (playerId ==1) ? index : index +7;
@@ -157,6 +173,45 @@ public class GameService {
         board.setConfiguration(configuration);
 
         return board;
+    }
+
+    /**
+     * Reverts last movement logged (if any), and removes it from history
+     * @param gameSession identifier of current session
+     * @return Game DTO
+     */
+    @Transactional
+    public GameDto undoLastMovement(
+            String gameSession){
+
+        var game = this.gameRepository.findByGameSession(gameSession);
+        var gameHistory = this.gameHistoryRepository.findTop1ByGameSessionOrderByCreatedOnDesc(gameSession);
+        var configuration = this.getCurrentConfiguration(gameSession);
+
+        if(gameHistory != null){
+            var restoredGame = GameHistoryHelper.toGame(gameHistory);
+            //keeps same ID
+            restoredGame.setId(game.getId());
+            //save history movement as current game status
+            restoredGame = this.gameRepository.save(restoredGame);
+            //delete history record found
+            this.gameHistoryRepository.deleteById(gameHistory.getId());
+            var board = GameHelper.toDto(restoredGame);
+            board.setConfiguration(configuration);
+
+            return board;
+        }else{
+            //if game is not found a new game is created
+            if(game == null){
+                return this.createGame(gameSession);
+            }
+            game = this.gameRepository.save(game);
+            //prepare returned DTO
+            var board = GameHelper.toDto(game);
+            board.setConfiguration(configuration);
+            return board;
+        }
+
     }
 
 }

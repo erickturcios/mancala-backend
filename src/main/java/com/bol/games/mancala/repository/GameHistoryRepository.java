@@ -11,6 +11,8 @@ public interface GameHistoryRepository extends JpaRepository<GameHistory, Long> 
     @Query(name = "findByGameSession", value = "SELECT c FROM GameHistory c WHERE c.gameSession = :gameSession ORDER BY c.createdOn DESC")
     List<GameHistory> findByGameSession(@Param("gameSession") String gameSession);
 
+    GameHistory findTop1ByGameSessionOrderByCreatedOnDesc(String gameSession);
+
     void deleteByGameSession(String gameSession);
 
 }

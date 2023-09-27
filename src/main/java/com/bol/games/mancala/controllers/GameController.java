@@ -34,4 +34,11 @@ public class GameController {
                 movement.getIndex()
         );
     }
+
+    @PutMapping("/undoMovement/{gameSession}")
+    public GameDto undoLastMovement(
+            @PathVariable("gameSession") String gameSession
+    ){
+        return this.gameService.undoLastMovement(gameSession);
+    }
 }

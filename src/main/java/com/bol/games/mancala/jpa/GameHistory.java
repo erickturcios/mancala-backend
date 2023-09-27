@@ -10,11 +10,39 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "game_boards_history")
 
 public class GameHistory {
+
+    public GameHistory(
+            Long id, String gameSession, int player01_index01,
+            int player01_index02, int player01_index03, int player01_index04,
+            int player01_index05, int player01_index06, int player01_total,
+            int player02_index01, int player02_index02, int player02_index03,
+            int player02_index04, int player02_index05, int player02_index06,
+            int player02_total, int playerToMoveNext, int winner,
+            Date createdOn) {
+        this.id = id;
+        this.gameSession = gameSession;
+        this.player01_index01 = player01_index01;
+        this.player01_index02 = player01_index02;
+        this.player01_index03 = player01_index03;
+        this.player01_index04 = player01_index04;
+        this.player01_index05 = player01_index05;
+        this.player01_index06 = player01_index06;
+        this.player01_total = player01_total;
+        this.player02_index01 = player02_index01;
+        this.player02_index02 = player02_index02;
+        this.player02_index03 = player02_index03;
+        this.player02_index04 = player02_index04;
+        this.player02_index05 = player02_index05;
+        this.player02_index06 = player02_index06;
+        this.player02_total = player02_total;
+        this.createdOn = createdOn;
+        this.playerToMoveNext = playerToMoveNext;
+        this.winner = winner;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
