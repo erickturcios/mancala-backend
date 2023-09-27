@@ -1,6 +1,7 @@
 package com.bol.games.mancala.controllers;
 
 import com.bol.games.mancala.dto.GameDto;
+import com.bol.games.mancala.dto.Movement;
 import com.bol.games.mancala.service.GameService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,5 +23,15 @@ public class GameController {
             @PathVariable("gameSession") String gameSession
     ){
         return this.gameService.createGame(gameSession);
+    }
+
+    @PutMapping
+    public GameDto move(@RequestBody Movement movement
+    ){
+        return this.gameService.move(
+                movement.getGameSession(),
+                movement.getPlayerId(),
+                movement.getIndex()
+        );
     }
 }

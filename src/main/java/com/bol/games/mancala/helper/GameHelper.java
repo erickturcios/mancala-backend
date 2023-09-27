@@ -3,6 +3,8 @@ package com.bol.games.mancala.helper;
 import com.bol.games.mancala.dto.GameDto;
 import com.bol.games.mancala.jpa.Game;
 
+import java.util.Arrays;
+
 public class GameHelper {
     public static Game toEntity(GameDto dto){
         if(dto.getPlayer01() == null || dto.getPlayer01().length < 6){
@@ -52,4 +54,94 @@ public class GameHelper {
                 entity.getCreatedOn(),
                 entity.getUpdatedOn());
     }
+
+    public static int[] convertGameToIntArray(Game game){
+
+        return new int[]{
+                game.getPlayer01_index01(),game.getPlayer01_index02(),
+                game.getPlayer01_index03(),game.getPlayer01_index04(),
+                game.getPlayer01_index05(),game.getPlayer01_index06(),
+                game.getPlayer01_total(),
+                game.getPlayer02_index01(),game.getPlayer02_index02(),
+                game.getPlayer02_index03(),game.getPlayer02_index04(),
+                game.getPlayer02_index05(),game.getPlayer02_index06(),
+                game.getPlayer02_total()
+        };
+    }
+
+    public static void convertIntArrayToGame(Game game, int[]board){
+        game.setPlayer01_index01(board[0]);
+        game.setPlayer01_index02(board[1]);
+        game.setPlayer01_index03(board[2]);
+        game.setPlayer01_index04(board[3]);
+        game.setPlayer01_index05(board[4]);
+        game.setPlayer01_index06(board[5]);
+        game.setPlayer01_total(board[6]);
+        game.setPlayer02_index01(board[7]);
+        game.setPlayer02_index02(board[8]);
+        game.setPlayer02_index03(board[9]);
+        game.setPlayer02_index04(board[10]);
+        game.setPlayer02_index05(board[11]);
+        game.setPlayer02_index06(board[12]);
+        game.setPlayer02_total(board[13]);
+    }
+
+
+    /**
+     * Always when the last stone lands in an own empty pit,
+     * the player captures his own stone and all stones in the opposite pit
+     * (the other player’s pit) and puts them in his own pit
+     * @param board array of current board values
+     * @param idx current index being evaluated
+     */
+    public static void evaluateEmptyPit(int[] board, int playerId, int idx){
+        //if value equal to 1, it means it was empty
+        if(board[idx] != 1){
+            return;
+        }
+        if(playerId == 1 && !(idx < 6)){
+            return;
+        }
+        if(playerId == 2 && !(idx >= 7 && idx <13)){
+            return;
+        }
+
+        int oppositeIndex = 12 - idx;
+        int takenStones = board[oppositeIndex] + board[idx];
+        board[idx]--;
+        board[oppositeIndex] = 0;
+
+        if(playerId ==1){
+            board[6] += takenStones;
+        }else{
+            board[13] += takenStones;
+        }
+    }
+
+
+    public static int evaluateGameOver(int[] board){
+        int p1 = 0;
+        int p2 = 0;
+        int[] finalBoard = new int[board.length];
+
+        for(int i=0; i<board.length; i++){
+            p1 += (i < 6) ? board[i]: 0;
+            p2 += (i>=7 && i < 13) ? board[i] : 0;
+            finalBoard[i] = (i == 6|| i == 13) ? board[i] : 0;
+        }
+
+        if(p1 == 0){
+            finalBoard[13] += p2;
+            board = finalBoard;
+            return 1;
+        }else if(p2 == 0){
+            finalBoard[6] += p1;
+            board = finalBoard;
+            return 2;
+        }
+
+        return 0;
+    }
+
+
 }
