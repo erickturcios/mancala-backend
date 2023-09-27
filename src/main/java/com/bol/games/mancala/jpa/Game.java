@@ -22,7 +22,8 @@ public class Game {
             int player01_index05, int player01_index06, int player01_total,
             int player02_index01, int player02_index02, int player02_index03,
             int player02_index04, int player02_index05, int player02_index06,
-            int player02_total, Date createdOn, Date updatedOn) {
+            int player02_total, int playerToMoveNext, int winner,
+            Date createdOn, Date updatedOn) {
         this.id = id;
         this.gameSession = gameSession;
         this.player01_index01 = player01_index01;
@@ -41,6 +42,8 @@ public class Game {
         this.player02_total = player02_total;
         this.createdOn = createdOn;
         this.updatedOn = updatedOn;
+        this.playerToMoveNext = playerToMoveNext;
+        this.winner = winner;
     }
 
     @Id
@@ -79,6 +82,12 @@ public class Game {
     private int player02_index06;
     @Column(name = "p2_total")
     private int player02_total;
+
+    @Column(name = "player_to_move_next")
+    private int playerToMoveNext;
+
+    @Column(name = "winner")
+    private int winner;
 
     @Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)

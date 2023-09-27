@@ -1,9 +1,5 @@
 package com.bol.games.mancala.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,13 +13,16 @@ public class GameDto {
 
     public GameDto(
             long id, String gameSession, int[] player01, int totalPlayer1,
-            int[] player02, int totalPlayer2, Date createdOn, Date updatedOn) {
+            int[] player02, int totalPlayer2, int playerToMoveNext,
+            int winner, Date createdOn, Date updatedOn) {
         this.id = id;
         this.gameSession = gameSession;
         this.player01 = player01;
         this.totalPlayer1 = totalPlayer1;
         this.player02 = player02;
         this.totalPlayer2 = totalPlayer2;
+        this.playerToMoveNext = playerToMoveNext;
+        this.winner = winner;
         this.createdOn = createdOn;
         this.updatedOn = updatedOn;
     }
@@ -35,6 +34,8 @@ public class GameDto {
     private int totalPlayer1;
     private int[] player02;
     private int totalPlayer2;
+    private int playerToMoveNext;
+    private int winner;
     private Date createdOn;
     private Date updatedOn;
 

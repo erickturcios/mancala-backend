@@ -53,6 +53,12 @@ public class GameHistory {
     @Column(name = "p2_total")
     private int player02_total;
 
+    @Column(name = "player_to_move_next")
+    private int playerToMoveNext;
+
+    @Column(name = "winner")
+    private int winner;
+
     @Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;

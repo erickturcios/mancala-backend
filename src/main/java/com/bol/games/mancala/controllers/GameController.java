@@ -22,6 +22,5 @@ public class GameController {
             @PathVariable("gameSession") String gameSession
     ){
         return this.gameService.createGame(gameSession);
-
     }
 }

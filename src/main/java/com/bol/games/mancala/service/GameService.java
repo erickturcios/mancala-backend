@@ -58,7 +58,6 @@ public class GameService {
         game.setGameSession(configuration.getGameSession());
 
         //Initialize game values for each player
-        game.setCreatedOn(new Date());
         game.setPlayer01_index01(stones);
         game.setPlayer01_index02(stones);
         game.setPlayer01_index03(stones);
@@ -73,6 +72,7 @@ public class GameService {
         game.setPlayer02_index05(stones);
         game.setPlayer02_index06(stones);
         game.setPlayer02_total(0);
+        game.setPlayerToMoveNext(1); //by default player 1 starts playing
 
         board = GameHelper.toDto(this.gameRepository.save(game));
         board.setConfiguration(configuration);
