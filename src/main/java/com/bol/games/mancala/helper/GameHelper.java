@@ -120,27 +120,47 @@ public class GameHelper {
 
 
     public static int evaluateGameOver(int[] board){
-        int p1 = 0;
-        int p2 = 0;
-        int[] finalBoard = new int[board.length];
+        var p1 = 0;
+        var p2 = 0;
+        var  finalBoard = new int[board.length];
 
         for(int i=0; i<board.length; i++){
             p1 += (i < 6) ? board[i]: 0;
             p2 += (i>=7 && i < 13) ? board[i] : 0;
             finalBoard[i] = (i == 6|| i == 13) ? board[i] : 0;
         }
-
+        var gameOver = p1 == 0 || p2 == 0;
         if(p1 == 0){
             finalBoard[13] += p2;
-            board = finalBoard;
-            return 1;
+            System.arraycopy(finalBoard, 0, board, 0, finalBoard.length);
         }else if(p2 == 0){
             finalBoard[6] += p1;
-            board = finalBoard;
-            return 2;
+            System.arraycopy(finalBoard, 0, board, 0, finalBoard.length);
         }
 
-        return 0;
+        var winner = 0;
+
+        if(gameOver){
+            if(finalBoard[6] > finalBoard[13]){
+                winner = 1;
+            }else if(finalBoard[6] < finalBoard[13]){
+                winner = 2;
+            }else{
+                winner = 3; //tie
+            }
+        }
+
+        return winner;
+    }
+
+    private void replaceBoardValues(int[] source, int[] target){
+        if(source == null || target == null){
+            return;
+        }
+        if(source.length != target.length){
+            return;
+        }
+
     }
 
 

@@ -94,13 +94,16 @@ public class GameService {
         if(game == null){
             return this.createGame(gameSession);
         }
+        var configuration = this.getCurrentConfiguration(gameSession);
 
         //wrong turn makes no effect
         //wring index makes no effect
         if(playerId != game.getPlayerToMoveNext()
             || index < 0 || index > 5
         ){
-            return GameHelper.toDto(game);
+            var board = GameHelper.toDto(game);
+            board.setConfiguration(configuration);
+            return board;
         }
 
         var boardArray = GameHelper.convertGameToIntArray(game);
@@ -151,8 +154,6 @@ public class GameService {
 
         //prepare returned DTO
         var board = GameHelper.toDto(game);
-
-        var configuration = this.getCurrentConfiguration(gameSession);
         board.setConfiguration(configuration);
 
         return board;
