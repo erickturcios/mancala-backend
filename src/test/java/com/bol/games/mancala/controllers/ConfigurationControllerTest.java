@@ -1,11 +1,10 @@
 package com.bol.games.mancala.controllers;
 
+import com.bol.games.mancala.constant.IntegrationTest;
 import com.bol.games.mancala.jpa.Configuration;
 import com.bol.games.mancala.service.ConfigurationService;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,7 +18,6 @@ import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -27,6 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ConfigurationController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
+@IntegrationTest
 class ConfigurationControllerTest {
 
     private final static String SESSION = "4a525c64-859d-4c95-99dd-44e8140dc5a1";
@@ -118,16 +118,60 @@ class ConfigurationControllerTest {
 
     @Test
     @Order(4)
-    void getOrCreate() {
+    void getOrCreate() throws Exception {
+
+        var config = new Configuration(100L, SESSION,
+                3, true, false,
+                "Alias-01-01", "Alias-02-01",
+                new Date(), null);
+
+        doReturn(config).when(configurationService).getOrCreate(SESSION);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/configuration/"+SESSION)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gameSession", is(config.getGameSession())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.numberOfStones", is(config.getNumberOfStones())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.stepBackAllowed", is(config.getStepBackAllowed())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.autorotate", is(config.getAutorotate())))
+        ;
     }
 
     @Test
     @Order(5)
-    void save() {
+    void save()  throws Exception{
+        var config = new Configuration(100L, SESSION,
+                3, true, false,
+                "Alias-01-01", "Alias-02-01",
+                new Date(), null);
+
+        doReturn(config).when(configurationService).save(config);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/configuration")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(config))
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gameSession", is(config.getGameSession())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.numberOfStones", is(config.getNumberOfStones())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.stepBackAllowed", is(config.getStepBackAllowed())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.autorotate", is(config.getAutorotate())))
+        ;
     }
 
-    @Test
-    @Order(6)
-    void delete() {
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
