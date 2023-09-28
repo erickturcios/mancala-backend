@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +44,15 @@ public class ConfigurationController {
     public Configuration getOne(
             @PathVariable("gameSession") String gameSession
     ){
-        return this.configurationService.getOne(gameSession);
+
+        var config = this.configurationService.getOne(gameSession);
+
+        if(config == null){
+            throw new NotFoundException("Configuration not found for session with Id: {gameSession}" );
+        }
+
+        return config;
+
     }
 
     @PostMapping("/{gameSession}")

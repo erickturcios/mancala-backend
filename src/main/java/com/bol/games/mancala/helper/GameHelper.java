@@ -7,6 +7,10 @@ import java.util.Arrays;
 
 public class GameHelper {
     public static Game toEntity(GameDto dto){
+
+        if(dto == null){
+            return null;
+        }
         if(dto.getPlayer01() == null || dto.getPlayer01().length < 6){
             dto.setPlayer01(new int[6]);
         }
@@ -27,6 +31,9 @@ public class GameHelper {
     }
 
     public static GameDto toDto(Game entity){
+        if(entity == null){
+            return null;
+        }
         int[] p1 = new int[]{
                 entity.getPlayer01_index01(),
                 entity.getPlayer01_index02(),
@@ -57,6 +64,9 @@ public class GameHelper {
 
     public static int[] convertGameToIntArray(Game game){
 
+        if(game == null){
+            return new int[14];
+        }
         return new int[]{
                 game.getPlayer01_index01(),game.getPlayer01_index02(),
                 game.getPlayer01_index03(),game.getPlayer01_index04(),
@@ -70,6 +80,10 @@ public class GameHelper {
     }
 
     public static void convertIntArrayToGame(Game game, int[]board){
+
+        if(game == null || board == null){
+            return;
+        }
         game.setPlayer01_index01(board[0]);
         game.setPlayer01_index02(board[1]);
         game.setPlayer01_index03(board[2]);

@@ -5,6 +5,9 @@ import com.bol.games.mancala.jpa.Configuration;
 
 public class ConfigurationHelper {
     public static Configuration toEntity(ConfigurationDto dto){
+        if(dto == null){
+            return null;
+        }
         return new Configuration(
                 dto.getId(), dto.getGameSession(),
                 dto.getNumberOfStones(), dto.getStepBackAllowed(),
@@ -14,6 +17,9 @@ public class ConfigurationHelper {
     }
 
     public static ConfigurationDto toDto(Configuration entity){
+        if(entity == null){
+            return null;
+        }
         return new ConfigurationDto(
                 entity.getId(), entity.getGameSession(),
                 entity.getNumberOfStones(), entity.getStepBackAllowed(),

@@ -46,14 +46,9 @@ public class ConfigurationServiceImpl implements ConfigurationService{
     ){
         var exists = this.gameSessionRepository.existsBySessionId(gameSession);
         if(!exists){
-            throw new NotFoundException("Session ID does not exist");
+            return null;
         }
-        var c = this.configurationRepository.findByGameSession(gameSession);
-        if(c == null){
-            throw new NotFoundException("Configuration not found for session with Id: {gameSession}" );
-        }
-
-        return c;
+        return this.configurationRepository.findByGameSession(gameSession);
     }
 
     @Override
