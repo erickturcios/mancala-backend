@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Movement {
+public class MovementDto {
     String gameSession;
     int playerId;
     int index;

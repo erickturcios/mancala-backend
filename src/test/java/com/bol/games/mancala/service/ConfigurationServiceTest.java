@@ -1,37 +1,33 @@
 package com.bol.games.mancala.service;
 
+import com.bol.games.mancala.constant.IntegrationTest;
 import com.bol.games.mancala.jpa.Configuration;
 import com.bol.games.mancala.repository.ConfigurationRepository;
 import com.bol.games.mancala.repository.GameSessionRepository;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@IntegrationTest
 class ConfigurationServiceTest {
 
     private final static String SESSION = "4a525c64-859d-4c95-99dd-44e8140dc5a1";
 
     @Autowired
-    ConfigurationServiceImpl configurationService;
+    ConfigurationService configurationService;
 
     @MockBean
     ConfigurationRepository configurationRepository;

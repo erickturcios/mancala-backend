@@ -1,6 +1,7 @@
 package com.bol.games.mancala.repository;
 
 
+import com.bol.games.mancala.constant.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql({"/insert_configurations.sql"})
+@IntegrationTest
 class ConfigurationRepositoryTest {
 
     @Autowired

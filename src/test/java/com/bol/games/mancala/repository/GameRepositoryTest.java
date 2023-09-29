@@ -1,5 +1,6 @@
 package com.bol.games.mancala.repository;
 
+import com.bol.games.mancala.constant.IntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql({"/insert_game_boards.sql"})
+@IntegrationTest
 class GameRepositoryTest {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.bol.games.mancala.repository;
 
+import com.bol.games.mancala.constant.IntegrationTest;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Sql({"/insert_game_boards_history.sql"})
+@IntegrationTest
 class GameHistoryRepositoryTest {
 
     @Autowired

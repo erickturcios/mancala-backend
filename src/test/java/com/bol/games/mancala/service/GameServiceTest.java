@@ -1,5 +1,6 @@
 package com.bol.games.mancala.service;
 
+import com.bol.games.mancala.constant.IntegrationTest;
 import com.bol.games.mancala.jpa.Configuration;
 import com.bol.games.mancala.jpa.Game;
 import com.bol.games.mancala.jpa.GameHistory;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@IntegrationTest
 class GameServiceTest {
 
     private final static String SESSION = "4a525c64-859d-4c95-99dd-44e8140dc5a1";

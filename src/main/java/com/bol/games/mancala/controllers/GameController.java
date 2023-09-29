@@ -1,7 +1,7 @@
 package com.bol.games.mancala.controllers;
 
 import com.bol.games.mancala.dto.GameDto;
-import com.bol.games.mancala.dto.Movement;
+import com.bol.games.mancala.dto.MovementDto;
 import com.bol.games.mancala.service.GameService;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,7 @@ public class GameController {
     }
 
     @PutMapping
-    public GameDto move(@RequestBody Movement movement
+    public GameDto move(@RequestBody MovementDto movement
     ){
         return this.gameService.move(
                 movement.getGameSession(),
