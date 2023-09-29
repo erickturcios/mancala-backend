@@ -1,11 +1,11 @@
 # mancala-backend
 Backend API for Mancala UI, built with Java 21 (Spring boot 3.1.4) exposes a REST API to be used by [mancala-ui](https://github.com/erickturcios/mancala-ui) project
 This API is designed to handle games per browser user session, which means:
-- Each user will have his/her own game configuration as long as the browser is not closed
+- Each user will have his/her own game configuration if the browser session is not closed
 - Each game movement is saved to MySQL database, which allows "Undo movement" whenever the user requires it
-- Each user can customize a custom configuration (not shared to any other user), eg. initial number of stones, auto rotate on each turn, allow "undo last movement"
+- Each user can customize a custom configuration (not shared to any other user), e.g. initial number of stones, auto rotate on each turn, allow "undo last movement"
 
-This appliocation was developed based on the following basic rules:
+This application was developed based on the following basic rules:
 
 ## Game Setup
 The player who begins with the first move picks up all the stones in any of his own six pits, and sows the stones on to the right, one in each of the following pits, including his own big pit. No stones are put in the opponents' big pit. If the player's last stone lands in his own big pit, he gets another turn. This can be repeated several times before it's the other player's turn.
