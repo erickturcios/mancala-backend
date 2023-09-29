@@ -3,8 +3,6 @@ package com.bol.games.mancala.helper;
 import com.bol.games.mancala.dto.GameDto;
 import com.bol.games.mancala.jpa.Game;
 
-import java.util.Arrays;
-
 public class GameHelper {
     public static Game toEntity(GameDto dto){
 
@@ -166,16 +164,4 @@ public class GameHelper {
 
         return winner;
     }
-
-    private void replaceBoardValues(int[] source, int[] target){
-        if(source == null || target == null){
-            return;
-        }
-        if(source.length != target.length){
-            return;
-        }
-
-    }
-
-
 }

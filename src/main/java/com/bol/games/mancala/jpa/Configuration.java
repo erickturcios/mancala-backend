@@ -1,15 +1,11 @@
 package com.bol.games.mancala.jpa;
 
 import jakarta.persistence.*;
-
-
-import java.util.Date;
-import java.util.Objects;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor

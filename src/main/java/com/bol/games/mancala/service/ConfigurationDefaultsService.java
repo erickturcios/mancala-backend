@@ -11,19 +11,19 @@ import lombok.Setter;
 @Setter
 @Service
 public class ConfigurationDefaultsService {
-    @Value("${mancala.defaults.numberOfStones}")
+    @Value("${game.defaults.numberOfStones}")
     private Integer numberOfStones;
 
-    @Value("${mancala.defaults.stepBackAllowed}")
+    @Value("${game.defaults.stepBackAllowed}")
     private Boolean stepBackAllowed;
 
-    @Value("${mancala.defaults.autorotate}")
+    @Value("${game.defaults.autorotate}")
     private Boolean autorotate;
 
-    @Value("${mancala.defaults.alias1}")
+    @Value("${game.defaults.alias1}")
     private String alias1;
 
-    @Value("${mancala.defaults.alias2}")
+    @Value("${game.defaults.alias2}")
     private String alias2;
 
     public Configuration getNewDefaultedInstance(String sessionId){

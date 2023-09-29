@@ -1,12 +1,10 @@
 package com.bol.games.mancala.jpa;
 
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Data
 @Entity

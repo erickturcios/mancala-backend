@@ -2,22 +2,10 @@ package com.bol.games.mancala.controllers;
 
 import com.bol.games.mancala.Exception.NotFoundException;
 import com.bol.games.mancala.jpa.Configuration;
-import com.bol.games.mancala.jpa.GameSession;
-import com.bol.games.mancala.repository.ConfigurationRepository;
-import com.bol.games.mancala.repository.GameSessionRepository;
-import com.bol.games.mancala.service.ConfigurationDefaultsService;
-
 import com.bol.games.mancala.service.ConfigurationService;
-import jakarta.transaction.Transactional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/configuration")

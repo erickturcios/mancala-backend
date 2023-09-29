@@ -1,6 +1,5 @@
 package com.bol.games.mancala.service;
 
-import com.bol.games.mancala.Exception.NotFoundException;
 import com.bol.games.mancala.jpa.Configuration;
 import com.bol.games.mancala.jpa.GameSession;
 import com.bol.games.mancala.repository.ConfigurationRepository;
