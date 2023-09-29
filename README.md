@@ -42,9 +42,9 @@ This is a high level view of objects used in the application:
 
 ![start](assets/model.png)
 
-## Application complete model
+## Application extended model
 
 This is a more complete detail of the application design:
 
-![start](assets/model_extended.png)
+![start](assets/model_extended.jpg)
 
