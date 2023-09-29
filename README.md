@@ -53,8 +53,8 @@ This is a more complete detail of the application design:
 
 ## Unit Tests
 
-    mvn test -Dgroups=IntegrationTest
+    mvn test -Dgroups=UnitTest   
 
 ## Integration Tests
 
-    mvn test -Dgroups=UnitTest   
+    mvn test -Dgroups=IntegrationTest
