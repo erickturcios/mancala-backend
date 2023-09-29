@@ -21,13 +21,30 @@ Run it with this command:
 
     .\mvnw spring-boot:run
 
+
+![start](assets/play-backend-01.jpg)
+
 Then you can access:
 
-## Open API UI
+## Open API UI (Swagger)
 
     http://localhost:8080/swagger-ui/index.html#/
 
-## Open API Doc
+![start](assets/play-backend-02.jpg)
+
+## Open API Doc (for postman)
 
     http://localhost:8080/v3/api-docs
+
+## Application basic model
+
+This is a high level view of objects used in the application:
+
+![start](assets/model.png)
+
+## Application complete model
+
+This is a more complete detail of the application design:
+
+![start](assets/model_extended.png)
 
