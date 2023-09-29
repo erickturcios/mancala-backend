@@ -48,3 +48,13 @@ This is a more complete detail of the application design:
 
 ![start](assets/model_extended.jpg)
 
+
+# Run Tests
+
+## Unit Tests
+
+    mvn test -Dgroups=IntegrationTest
+
+## Integration Tests
+
+    mvn test -Dgroups=UnitTest   
